@@ -5,6 +5,7 @@ require "colorize"
 require "logger"
 require "json"
 require "yaml"
+require "dotenv"
 
 if ENV["DEBUG"].present?
   require "pry"
@@ -27,6 +28,8 @@ require "gamma/importer/replace"
 require "gamma/command"
 require "gamma/command/apply"
 require "gamma/command/dryrun"
+
+Dotenv.load
 
 module Gamma
 end

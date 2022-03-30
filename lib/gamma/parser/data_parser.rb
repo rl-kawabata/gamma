@@ -2,7 +2,8 @@ class Gamma::Parser::DataParser < Gamma::Parser
   DEFAULT_SYNC_MODE = "replace"
 
   def initialize(data_yaml_path, hook_root_dir, in_client, out_client, apply: false)
-    @data_settings = YAML.load_file(data_yaml_path).map(&:with_indifferent_access)
+    # @data_settings = YAML.load_file(data_yaml_path).map(&:with_indifferent_access)
+    @data_settings = YAML.load(ERB.new(File.read(data_yaml_path)).result).map(&:with_indifferent_access)
     @hook_root_dir = hook_root_dir
     @in_client = in_client
     @out_client = out_client
