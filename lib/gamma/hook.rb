@@ -1,7 +1,7 @@
 class Gamma::Hook
   attr_accessor :hook_type, :column_name, :script_path, :root_dir, :apply
 
-  def execute_script(record)
+  def execute_script(table_name, record)
     path = File.join(root_dir, script_path)
     fail "Hook Scripts Not Found. path: #{path}" unless File.exist?(path)
 
@@ -13,7 +13,7 @@ class Gamma::Hook
       instance = klass_name.constantize.new
       case self.hook_type.to_s
       when "column"
-        r = instance.execute(apply, column_name.to_s, record[column_name.to_s])
+        r = instance.execute(apply, column_name.to_s, table_name, record, record[column_name.to_s])
         record[column_name.to_s] = r
       when "row"
         record = instance.execute(apply, record)
@@ -21,6 +21,7 @@ class Gamma::Hook
         fail "Error"
       end
     rescue => e
+      p e
       raise "Invalid Hook Class #{klass_name}"
     end
 

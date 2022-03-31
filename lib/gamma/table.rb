@@ -17,7 +17,7 @@ class Gamma::Table
   private
 
   def execute_row_hook(hook, record)
-    hook.execute_script(record)
+    hook.execute_script(self.table_name, record)
   end
 
   def execute_column_hook(hook, record)
